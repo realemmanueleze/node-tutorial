@@ -1,14 +1,11 @@
-const EventEmitter = require('events')
+import { resolveSoa } from 'dns'
+import http from 'http'
 
-const customEmitter = new EventEmitter()
-console.log(customEmitter)
-
-customEmitter.on('response', (name, id) => {
-  console.log(`data recieved from ${name} with th id: ${id}`)
+const server = http.createServer((req, res)=>{
+  if(req === '/'){
+    res.end(`<h1>Fio Fio moda fuka!!, we made it`)
+  }
+  res.end("You hit the wrong address man, get your act together")
 })
 
-customEmitter.on('response', () => {
-  console.log(`some other task`)
-})
-
-customEmitter.emit('response', 'john', 32)
+server.listen(5000)
