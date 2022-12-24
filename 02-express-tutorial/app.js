@@ -19,19 +19,23 @@ app.get("/api/products/:id", (req, res) => {
   const sp = products.find((product) => product.id === Number(id));
   res.json(sp);
 });
+
 app.get("/api/v1/query", (req, res) => {
   console.log(req.query);
   const { search, limit } = req.query;
   let sorted = [...products];
   if (search) {
-    sorted = products.filter((product) => {
+    sorted = sorted.filter((product) => {
       return product.name.startsWith(search);
     });
   }
   if(limit){
-    sorted = products.slice(0,Number(limit))
+    sorted = sorted.slice(0,Number(limit))
   }
-  res.send(sorted);
+  if(sorted.lenght < 1){
+    res.status(200).send('no products matched your search')
+  }
+  res.json(sorted);
 });
 
 app.listen(5000, () => {
